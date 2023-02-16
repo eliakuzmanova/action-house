@@ -8,19 +8,25 @@ exports.getRegisterView = (req, res) => {
 }
 
 exports.postRegister = async (req, res) => {
-    const { username, email, password, repeatPassword } = req.body
+    const {email,firstName, lastName, password, repeatPassword } = req.body
 
 
     try {
-        if(!username) {
-            throw Error("Username is required")
-        }
 
         if(!email) {
             throw Error("Email is required")
         }
+        if(!firstName) {
+            throw Error("First name is required")
+        }
+        if(!lastName) {
+            throw Error("Last name is required")
+        }
         if(!password) {
             throw Error("Password is required")
+        }
+        if(password.length < 5){
+            throw Error("Too short password")
         }
         if(!repeatPassword) {
             throw Error("Confirm password is required")
@@ -34,7 +40,7 @@ exports.postRegister = async (req, res) => {
             throw Error("Passwords missmatch")
         }
 
-        await authService.register(username, email, password)
+        await authService.register(email,firstName, lastName, password)
 
         const token = await authService.login(req, res, email, password)
         res.cookie("auth", token)

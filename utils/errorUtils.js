@@ -5,6 +5,13 @@ function getFirstMonooseError(err) {
     return errors[0];
 }
 
+// function getAllMonooseErrors(err) {
+//     const errors =  err.map(e => e.message)
+//     console.log("hello");
+//     console.log(errors);
+//     return errors
+// }
+
 exports.getErrorMessage = (err) => {
     switch (err.name) {
         case "Error":
